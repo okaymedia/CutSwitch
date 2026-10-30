@@ -12,6 +12,7 @@ Premiere'de yıllarca kullandığın kas hafızasını Final Cut'a taşır:
 | Premiere kısayolları | Tek tıkla kurulur: **C** kesme, **V** seçme ve diğerleri |
 
 - Sadece Final Cut Pro öndeyken çalışır, diğer uygulamalara dokunmaz.
+- İstersen Mac açılınca otomatik başlar (Ayarlar → "Mac açılınca başlat").
 - Türkçe Q / F ve diğer klavye düzenlerinde çalışır.
 - Final Cut'ın tek seferlik, Creator Studio ve deneme sürümleriyle uyumlu.
 - İnternet bağlantısı yok, veri toplamaz.
@@ -100,7 +101,6 @@ xcrun stapler staple build/CutSwitch.app
 - [ ] Zoom'u mouse imlecinin olduğu yere göre yapma
 - [ ] DaVinci Resolve kullanıcıları için kısayol seti
 - [ ] Sparkle ile otomatik güncelleme
-- [ ] Oturum açılışında otomatik başlatma
 
 Katkılar memnuniyetle karşılanır: issue aç ya da PR gönder.
 
