@@ -7,6 +7,13 @@ final class MouseLogicTests: XCTestCase {
         XCTAssertEqual(MenuShortcut.action(character: "+", modifiers: 0), .zoomIn)
     }
     func testZoomOutShortcut() { XCTAssertEqual(MenuShortcut.action(character: "-", modifiers: 0), .zoomOut) }
+    func testPremiereShortcuts() {
+        XCTAssertEqual(MenuShortcut.premiereAction(character: "=", modifiers: 8), .zoomIn)
+        XCTAssertEqual(MenuShortcut.premiereAction(character: "-", modifiers: 8), .zoomOut)
+        XCTAssertEqual(MenuShortcut.premiereAction(character: "\\", modifiers: 8), .zoomToFit)
+        XCTAssertNil(MenuShortcut.premiereAction(character: "=", modifiers: 0))
+        XCTAssertNil(MenuShortcut.premiereAction(character: "z", modifiers: 9))
+    }
     func testFitShortcut() { XCTAssertEqual(MenuShortcut.action(character: "Z", modifiers: 9), .zoomToFit) }
     func testRejectOtherModifiers() {
         for modifiers in [1, 2, 4, 8, 16] { XCTAssertNil(MenuShortcut.action(character: "=", modifiers: modifiers)) }

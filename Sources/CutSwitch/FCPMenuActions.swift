@@ -16,6 +16,7 @@ final class FCPMenuActions {
     private var zoomIn: AXUIElement?
     private var zoomOut: AXUIElement?
     private var zoomToFit: AXUIElement?
+    private var fallback: [ZoomAction: AXUIElement] = [:]
 
     /// Komutu çalıştırır. Başarılıysa true döner.
     @discardableResult
@@ -53,13 +54,19 @@ final class FCPMenuActions {
 
         let app = AXUIElementCreateApplication(pid)
         guard let menuBar: AXUIElement = attribute(app, kAXMenuBarAttribute) else { return }
+        fallback = [:]
         walk(menuBar, depth: 0)
+        zoomIn = zoomIn ?? fallback[.zoomIn]
+        zoomOut = zoomOut ?? fallback[.zoomOut]
+        zoomToFit = zoomToFit ?? fallback[.zoomToFit]
+        fallback = [:]
     }
 
     /// Menüleri dolaşıp kısayol karakterine göre ilgili öğeleri bulur.
     ///  ⌘+ / ⌘=  → Zoom In
     ///  ⌘-       → Zoom Out
     ///  ⇧Z       → Zoom to Fit  (Command'sız, sadece Shift)
+    ///  Bulunamazsa Premiere setindeki =, -, \ (Command'sız) yedek olarak kullanılır.
     private func walk(_ el: AXUIElement, depth: Int) {
         guard depth < 6 else { return }
 
@@ -69,7 +76,9 @@ final class FCPMenuActions {
             case .zoomIn where zoomIn == nil: zoomIn = el
             case .zoomOut where zoomOut == nil: zoomOut = el
             case .zoomToFit where zoomToFit == nil: zoomToFit = el
-            default: break
+            default:
+                if let action = MenuShortcut.premiereAction(character: char, modifiers: mods),
+                   fallback[action] == nil { fallback[action] = el }
             }
         }
 

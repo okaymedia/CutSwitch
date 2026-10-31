@@ -1,15 +1,14 @@
 import AppKit
 
-/// Uygulamanın içinde gelen "Premiere Pro" kısayol setini Final Cut Pro'ya kurar.
-///
-/// Set dosyası (`Premiere Pro.commandset`) Final Cut'ın kendi Command Editor'ünden
-/// dışa aktarılmış bir dosyadır ve derleme sırasında uygulamanın Resources klasörüne kopyalanır.
+/// Uygulamayla paketlenen kısayol setlerini Final Cut Pro'ya kurar.
 enum CommandSetInstaller {
+    enum CommandSet: String {
+        case premierePro = "Premiere Pro"
+        case davinciResolve = "DaVinci Resolve"
+    }
 
-    static let setName = "Premiere Pro"
-
-    static var bundledSet: URL? {
-        Bundle.main.url(forResource: setName, withExtension: "commandset")
+    static func bundledSet(for set: CommandSet) -> URL? {
+        Bundle.main.url(forResource: set.rawValue, withExtension: "commandset")
     }
 
     /// Final Cut'ın kullanıcı kısayol setlerini aradığı olası klasörler.
@@ -29,8 +28,9 @@ enum CommandSetInstaller {
         case failed(String)
     }
 
-    static func install() -> Outcome {
-        guard let source = bundledSet else { return .missingBundledSet }
+    static func install(_ set: CommandSet) -> Outcome {
+        let setName = set.rawValue
+        guard let source = bundledSet(for: set) else { return .missingBundledSet }
 
         let fm = FileManager.default
         var installed: [URL] = []
@@ -53,40 +53,32 @@ enum CommandSetInstaller {
         }
 
         if !installed.isEmpty { return .installed(installed) }
-        return .failed(lastError ?? "Final Cut Pro'nun ayar klasörü bulunamadı. Final Cut'ı en az bir kez açtın mı?")
+        return .failed(lastError ?? UIStrings.finalCutSettingsMissing)
     }
 
     /// Kurulumu yapar ve sonucu kullanıcıya gösterir.
-    static func installWithFeedback() {
+    static func installWithFeedback(_ set: CommandSet) {
+        let setName = set.rawValue
         let alert = NSAlert()
 
-        switch install() {
+        switch install(set) {
         case .installed:
-            alert.messageText = "Premiere Pro kısayolları kuruldu ✓"
-            alert.informativeText = """
-            Final Cut Pro'yu yeniden başlat, sonra:
-            Final Cut Pro menüsü → Commands → "\(setName)" seç.
-
-            Artık C ile kesme, V ile seçme gibi Premiere kısayolları çalışır.
-            """
-            alert.addButton(withTitle: "Tamam")
+            alert.messageText = UIStrings.shortcutsInstalled(setName: setName)
+            alert.informativeText = UIStrings.shortcutsInstalledDetail(setName: setName)
+            alert.addButton(withTitle: UIStrings.okay)
 
         case .missingBundledSet:
-            alert.messageText = "Kısayol seti bu sürümde yok"
-            alert.informativeText = "Uygulamanın bu sürümünde Premiere kısayol dosyası bulunmuyor. Mouse kontrolleri yine de çalışır."
-            alert.addButton(withTitle: "Tamam")
+            alert.messageText = UIStrings.commandSetMissing
+            alert.informativeText = UIStrings.commandSetMissingDetail(setName: setName)
+            alert.addButton(withTitle: UIStrings.okay)
 
         case .failed(let reason):
-            alert.messageText = "Otomatik kurulum yapılamadı"
-            alert.informativeText = """
-            \(reason)
-
-            Elle kurmak kolay: Final Cut Pro'da Commands → Customize (⌥⌘K) aç, sol üstteki menüden Import'u seç ve az sonra açılacak klasördeki "\(setName).commandset" dosyasını göster.
-            """
-            alert.addButton(withTitle: "Dosyayı Göster")
-            alert.addButton(withTitle: "Vazgeç")
+            alert.messageText = UIStrings.installationFailed
+            alert.informativeText = UIStrings.installationFailedDetail(reason: reason, setName: setName)
+            alert.addButton(withTitle: UIStrings.showFile)
+            alert.addButton(withTitle: UIStrings.cancel)
             NSApp.activate(ignoringOtherApps: true)
-            if alert.runModal() == .alertFirstButtonReturn, let src = bundledSet {
+            if alert.runModal() == .alertFirstButtonReturn, let src = bundledSet(for: set) {
                 NSWorkspace.shared.activateFileViewerSelecting([src])
             }
             return

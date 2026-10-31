@@ -30,19 +30,28 @@ struct WelcomeView: View {
                 }
             }
 
-            // Adım 2: Premiere mi?
+            // Adım 2: Kısayol setleri
             StepRow(number: 2, title: UIStrings.premiereTitle,
                     detail: UIStrings.premiereDetail) {
                 HStack {
                     Button(UIStrings.installPremiere) {
-                        CommandSetInstaller.installWithFeedback()
+                        CommandSetInstaller.installWithFeedback(.premierePro)
                     }
                     .buttonStyle(.borderedProminent)
-                    .disabled(CommandSetInstaller.bundledSet == nil)
+                    .disabled(CommandSetInstaller.bundledSet(for: .premierePro) == nil)
                 }
             }
 
-            StepRow(number: 3, title: UIStrings.loginTitle, detail: UIStrings.loginDetail) {
+            StepRow(number: 3, title: UIStrings.davinciTitle,
+                    detail: UIStrings.davinciDetail) {
+                Button(UIStrings.installDavinci) {
+                    CommandSetInstaller.installWithFeedback(.davinciResolve)
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(CommandSetInstaller.bundledSet(for: .davinciResolve) == nil)
+            }
+
+            StepRow(number: 4, title: UIStrings.loginTitle, detail: UIStrings.loginDetail) {
                 LoginToggle()
             }
 
@@ -147,9 +156,18 @@ struct MenuView: View {
             Divider()
 
             Button(UIStrings.installShortcuts) {
-                CommandSetInstaller.installWithFeedback()
+                CommandSetInstaller.installWithFeedback(.premierePro)
             }
-            .disabled(CommandSetInstaller.bundledSet == nil)
+            .disabled(CommandSetInstaller.bundledSet(for: .premierePro) == nil)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(UIStrings.davinciTitle).font(.caption)
+                Button(UIStrings.installDavinci) {
+                    CommandSetInstaller.installWithFeedback(.davinciResolve)
+                }
+                .disabled(CommandSetInstaller.bundledSet(for: .davinciResolve) == nil)
+                .help(UIStrings.davinciDetail)
+            }
 
             LoginToggle()
 

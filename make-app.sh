@@ -8,7 +8,7 @@ set -euo pipefail
 
 APP_NAME="CutSwitch"
 BUNDLE_ID="agency.okaymedia.cutswitch"
-VERSION="0.1.0"
+VERSION="0.2.0"
 SIGN_ID="${1:--}"   # varsayılan "-" = ad-hoc
 
 cd "$(dirname "$0")"
@@ -24,12 +24,14 @@ rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
 cp "$BIN_PATH" "$APP_DIR/Contents/MacOS/$APP_NAME"
 
-if [ -f "Resources/Premiere Pro.commandset" ]; then
-  cp "Resources/Premiere Pro.commandset" "$APP_DIR/Contents/Resources/"
-  echo "  ✓ Premiere Pro kısayol seti eklendi"
-else
-  echo "  ⚠ Resources/Premiere Pro.commandset yok, kısayol kurulumu devre dışı kalacak (README'ye bak)"
-fi
+for SET_NAME in "Premiere Pro" "DaVinci Resolve"; do
+  if [ -f "Resources/$SET_NAME.commandset" ]; then
+    cp "Resources/$SET_NAME.commandset" "$APP_DIR/Contents/Resources/"
+    echo "  ✓ $SET_NAME kısayol seti eklendi"
+  else
+    echo "  ⚠ Resources/$SET_NAME.commandset yok, bu setin kurulumu devre dışı kalacak (README'ye bak)"
+  fi
+done
 
 if [ ! -f "Resources/AppIcon.icns" ]; then
   swift scripts/make-icon.swift

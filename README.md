@@ -1,37 +1,42 @@
+🇹🇷 [Türkçe](README.tr.md)
+
 # ✂️ CutSwitch
 
-**Premiere Pro'dan Final Cut Pro'ya geçenler için ücretsiz, açık kaynak Mac aracı.**
+**A free, open-source Mac utility for editors switching from Premiere Pro to Final Cut Pro.**
 
-Premiere'de yıllarca kullandığın kas hafızasını Final Cut'a taşır:
+Bring years of Premiere muscle memory to Final Cut:
 
-| Ne yapar | Nasıl |
+| What it does | How |
 |---|---|
-| Timeline zoom | **⌥ Option + mouse tekerleği** (Premiere'deki Alt + tekerlek gibi) |
-| Zoom to Fit | **Orta tuşa tıkla** |
-| Timeline'ı kaydır | **Orta tuşla sürükle** (el aracı gibi) |
-| Premiere kısayolları | Tek tıkla kurulur: **C** kesme, **V** seçme ve diğerleri |
+| Timeline zoom | **⌥ Option + scroll wheel** (like Alt + scroll wheel in Premiere) |
+| Zoom to Fit | **Middle click** |
+| Pan the timeline | **Middle drag** (like the Hand tool) |
+| Premiere shortcuts | Install with one click: **C** for Blade, **V** for Select, and more |
 
-- Sadece Final Cut Pro öndeyken çalışır, diğer uygulamalara dokunmaz.
-- İstersen Mac açılınca otomatik başlar (Ayarlar → "Mac açılınca başlat").
-- Türkçe Q / F ve diğer klavye düzenlerinde çalışır.
-- Final Cut'ın tek seferlik, Creator Studio ve deneme sürümleriyle uyumlu.
-- İnternet bağlantısı yok, veri toplamaz.
+- Works only while Final Cut Pro is the active app; other apps are unaffected.
+- Optionally launches when you log in to your Mac (Settings → "Launch at login").
+- Turkish and English interface, selected automatically based on your Mac’s language.
+- Works with Turkish Q / F and other keyboard layouts.
+- Compatible with the standalone, Creator Studio, and trial versions of Final Cut.
+- No internet connections or data collection.
 
 ---
 
-## Kurulum (kullanıcılar için)
+## Installation (for users)
 
-1. [Releases](https://github.com/okaymedia/CutSwitch/releases) sayfasından `CutSwitch-0.1.0.dmg` dosyasını indir, uygulamayı **Applications** klasörüne sürükle.
-2. Aç. Kurulum ekranında **İzin Ver**'e bas ve Sistem Ayarları'nda CutSwitch'e Erişilebilirlik izni ver.
-3. Premiere'den geliyorsan **"Evet, Premiere kısayollarını kur"** butonuna bas. Sonra Final Cut'ı yeniden başlat ve **Final Cut Pro → Commands → Premiere Pro**'yu seç.
+1. Download `CutSwitch-<version>.dmg` from [Releases](https://github.com/okaymedia/CutSwitch/releases) and drag the app to **Applications**.
+2. Open it. Click **Grant Permission** in the setup window and give CutSwitch Accessibility permission in System Settings.
+3. If you are coming from Premiere, click **"Yes, install Premiere shortcuts"**. Then restart Final Cut and choose **Final Cut Pro → Commands → Premiere Pro**.
 
-Ayarlar menü çubuğundaki ✂️ simgesinde.
+If you are coming from DaVinci Resolve, click **"Install DaVinci shortcuts"**, restart Final Cut, and choose **Commands → DaVinci Resolve**: this set preserves the existing shortcuts and adds **⌘\** for Blade and **⇧[ / ⇧]** for Trim.
 
-> Uygulamayı yalnızca bu reponun Releases sayfasından indir. Oradaki DMG Apple tarafından imzalanmış ve onaylanmıştır (notarized). Başka yerden gelen kopyalara güvenme.
+Settings are available through the ✂️ icon in the menu bar.
 
-### Premiere kısayol seti
+> Download the app only from this repository’s Releases page. The DMG there is signed and notarized by Apple. Do not trust copies from other sources.
 
-| Premiere | Final Cut komutu |
+### Premiere Command Set
+
+| Premiere | Final Cut command |
 |---|---|
 | C | Blade |
 | V | Select |
@@ -40,13 +45,13 @@ Ayarlar menü çubuğundaki ✂️ simgesinde.
 | = / - | Zoom In / Zoom Out |
 | \\ | Zoom to Fit |
 
-> Final Cut'ın kendi kısayolları silinmez. İstediğin zaman **Commands → Default** ile geri dönebilirsin.
+> Final Cut’s own shortcuts are preserved. You can switch back at any time with **Commands → Default**.
 
 ---
 
-## Geliştiriciler için
+## For developers
 
-**Gereksinimler:** macOS 13+, Xcode (ya da Command Line Tools ve Swift 5.9+).
+**Requirements:** macOS 13+, Xcode (or Command Line Tools and Swift 5.9+).
 
 ```bash
 git clone https://github.com/okaymedia/CutSwitch.git
@@ -56,38 +61,38 @@ chmod +x make-app.sh
 open build/CutSwitch.app
 ```
 
-> Ad-hoc imzalı sürümde her yeniden derlemeden sonra macOS Erişilebilirlik iznini sıfırlayabilir. Sistem Ayarları'nda CutSwitch'i listeden kaldırıp yeniden ekle.
+> With an ad-hoc signed build, macOS may reset Accessibility permission after each rebuild. Remove CutSwitch from the list in System Settings, then add it again.
 
-### Premiere kısayol setini üretmek
+### Creating the Premiere Command Set
 
-Kısayol seti, Final Cut'ın kendi **Command Editor**'ünden dışa aktarılmış bir dosya (`.commandset`):
+The Command Set is a file (`.commandset`) exported from Final Cut’s own **Command Editor**:
 
-1. Final Cut Pro'da **Commands → Customize** (⌥⌘K).
-2. Sol üstteki menüden **Duplicate** seç, adını tam olarak **`Premiere Pro`** koy.
-3. Yukarıdaki tablodaki eşleştirmeleri yap. Komutu arama kutusunda bul, klavyedeki tuşa sürükle. Çakışma uyarısında **Reassign** de.
-4. **Save** ile kaydet. Sonra aynı menüden **Export** seçip dosyayı `Resources/Premiere Pro.commandset` olarak kaydet.
-5. `./make-app.sh` set dosyasını uygulamanın içine otomatik koyar.
+1. In Final Cut Pro, open **Commands → Customize** (⌥⌘K).
+2. Choose **Duplicate** from the top-left menu and name it exactly **`Premiere Pro`**.
+3. Apply the mappings in the table above. Find each command in the search box and drag it to the keyboard key. Choose **Reassign** if a conflict warning appears.
+4. Click **Save**. Then choose **Export** from the same menu and save the file as `Resources/Premiere Pro.commandset`.
+5. `./make-app.sh` automatically includes the Command Set file in the app.
 
-### Proje yapısı
+### Project structure
 
 ```
 Sources/CutSwitch/
-  CutSwitchApp.swift        Uygulama + menü çubuğu + açılış
-  MouseController.swift     Mouse olaylarını yakalama (CGEventTap)
-  FCPMenuActions.swift      Final Cut menü komutlarını tetikleme (Accessibility API)
-  CommandSetInstaller.swift Premiere kısayol setini kurma
-  Settings.swift            Ayarlar
-  Views.swift               Arayüz
+  CutSwitchApp.swift        App + menu bar + launch
+  MouseController.swift     Mouse event handling (CGEventTap)
+  FCPMenuActions.swift      Final Cut menu commands (Accessibility API)
+  CommandSetInstaller.swift Premiere Command Set installation
+  Settings.swift            Settings
+  Views.swift               Interface
 ```
 
-**Neden menü komutu, neden kısayol değil?** Zoom için ⌘+ tuşunu taklit etmek Türkçe klavyede yanlış tuşa denk geliyor. CutSwitch bunun yerine Final Cut'ın menüsünde kısayolu `⌘+`, `⌘-` ve `⇧Z` olan öğeleri bulup doğrudan onlara basıyor. Bu yüzden klavye düzeninden ve arayüz dilinden bağımsız çalışıyor.
+**Why use menu commands instead of keyboard shortcuts?** Simulating ⌘+ for zoom hits the wrong key on a Turkish keyboard. CutSwitch instead finds Final Cut menu items with the shortcuts `⌘+`, `⌘-`, and `⇧Z` and activates them directly. This works regardless of keyboard layout or interface language.
 
-**Neden Mac App Store'da değil?** App Store uygulamaları sandbox'ta çalışmak zorunda. Sandbox içindeki uygulamalar başka uygulamaların mouse olaylarını değiştiremiyor. Bu yüzden CutSwitch (BetterTouchTool, Mac Mouse Fix ve CommandPost gibi) Developer ID ile imzalanıp notarize edilerek doğrudan dağıtılıyor.
+**Why isn’t it on the Mac App Store?** App Store apps must run in a sandbox. Sandboxed apps cannot modify mouse events in other apps. CutSwitch, like BetterTouchTool, Mac Mouse Fix, and CommandPost, is therefore signed with a Developer ID, notarized, and distributed directly.
 
-### Dağıtım (imza + notarization)
+### Distribution (signing + notarization)
 
 ```bash
-./make-app.sh "Developer ID Application: Ad Soyad (TEAMID)"
+./make-app.sh "Developer ID Application: Full Name (TEAMID)"
 ditto -c -k --keepParent build/CutSwitch.app build/CutSwitch.zip
 xcrun notarytool submit build/CutSwitch.zip --keychain-profile "notary" --wait
 xcrun stapler staple build/CutSwitch.app
@@ -95,17 +100,15 @@ xcrun stapler staple build/CutSwitch.app
 
 ---
 
-## Yol haritası
+## Roadmap
 
-- [ ] İngilizce arayüz
-- [ ] Zoom'u mouse imlecinin olduğu yere göre yapma
-- [ ] DaVinci Resolve kullanıcıları için kısayol seti
-- [ ] Sparkle ile otomatik güncelleme
+- [ ] Zoom around the mouse pointer
+- [ ] Automatic updates with Sparkle
 
-Katkılar memnuniyetle karşılanır: issue aç ya da PR gönder.
+Contributions are welcome: open an issue or submit a PR.
 
-## Lisans
+## License
 
 MIT © 2026 Hakan Okay / [OkayMedia](https://okaymedia.agency)
 
-*Final Cut Pro, Apple Inc.'in; Premiere Pro, Adobe Inc.'in ticari markasıdır. CutSwitch bağımsız bir projedir, Apple ya da Adobe ile bir bağlantısı yoktur.*
+*Final Cut Pro is a trademark of Apple Inc.; Premiere Pro is a trademark of Adobe Inc. CutSwitch is an independent project and is not affiliated with Apple or Adobe.*

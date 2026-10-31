@@ -10,6 +10,17 @@ public enum MenuShortcut {
         default: return nil
         }
     }
+
+    /// CutSwitch Premiere setindeki tuşlar (Command'sız =, -, \). Yalnız varsayılan
+    /// ⌘ kısayolları menüde yoksa kullanılır; varsayılan sette bu tuşlar başka işlere ait.
+    public static func premiereAction(character: String, modifiers: Int) -> ZoomAction? {
+        switch (character.lowercased(), modifiers) {
+        case ("=", 8), ("+", 8): return .zoomIn
+        case ("-", 8): return .zoomOut
+        case ("\\", 8): return .zoomToFit
+        default: return nil
+        }
+    }
 }
 
 public enum WheelDecision: Equatable { case pass, consume, zoom(ZoomAction) }
