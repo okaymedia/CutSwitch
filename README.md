@@ -2,7 +2,9 @@
 
 # ✂️ CutSwitch
 
-**A free, open-source Mac utility for editors switching from Premiere Pro to Final Cut Pro.**
+**A free, open-source Mac utility for editors switching from Premiere Pro or DaVinci Resolve to Final Cut Pro.**
+
+<p align="center"><img src=".github/screenshot.png" width="460" alt="CutSwitch welcome window"></p>
 
 Bring years of Premiere muscle memory to Final Cut:
 

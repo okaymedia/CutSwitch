@@ -2,7 +2,9 @@
 
 # ✂️ CutSwitch
 
-**Premiere Pro'dan Final Cut Pro'ya geçenler için ücretsiz, açık kaynak Mac aracı.**
+**Premiere Pro veya DaVinci Resolve'dan Final Cut Pro'ya geçenler için ücretsiz, açık kaynak Mac aracı.**
+
+<p align="center"><img src=".github/screenshot.png" width="460" alt="CutSwitch kurulum penceresi"></p>
 
 Premiere'de yıllarca kullandığın kas hafızasını Final Cut'a taşır:
 
