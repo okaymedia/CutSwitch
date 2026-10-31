@@ -13,6 +13,7 @@ Premiere'de yıllarca kullandığın kas hafızasını Final Cut'a taşır:
 | Timeline'ı kaydır | **Orta tuşla sürükle** (el aracı gibi) |
 | Premiere kısayolları | Tek tıkla kurulur: **C** kesme, **V** seçme ve diğerleri |
 
+- Skimming açıkken (**S**) zoom mouse imlecinin olduğu yere yapılır; kapalıyken playhead'e göre yapılır.
 - Sadece Final Cut Pro öndeyken çalışır, diğer uygulamalara dokunmaz.
 - İstersen Mac açılınca otomatik başlar (Ayarlar → "Mac açılınca başlat").
 - Türkçe ve İngilizce arayüz (Mac’in diline göre otomatik seçilir).
@@ -102,7 +103,6 @@ xcrun stapler staple build/CutSwitch.app
 
 ## Yol haritası
 
-- [ ] Zoom'u mouse imlecinin olduğu yere göre yapma
 - [ ] Sparkle ile otomatik güncelleme
 
 Katkılar memnuniyetle karşılanır: issue aç ya da PR gönder.

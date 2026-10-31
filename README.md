@@ -13,6 +13,7 @@ Bring years of Premiere muscle memory to Final Cut:
 | Pan the timeline | **Middle drag** (like the Hand tool) |
 | Premiere shortcuts | Install with one click: **C** for Blade, **V** for Select, and more |
 
+- Zoom follows the mouse pointer while skimming is on (press **S**); otherwise it zooms around the playhead.
 - Works only while Final Cut Pro is the active app; other apps are unaffected.
 - Optionally launches when you log in to your Mac (Settings → "Launch at login").
 - Turkish and English interface, selected automatically based on your Mac’s language.
@@ -102,7 +103,6 @@ xcrun stapler staple build/CutSwitch.app
 
 ## Roadmap
 
-- [ ] Zoom around the mouse pointer
 - [ ] Automatic updates with Sparkle
 
 Contributions are welcome: open an issue or submit a PR.
